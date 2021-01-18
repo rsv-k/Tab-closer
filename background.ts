@@ -33,6 +33,10 @@ function clearAlarm(tabId: string): Promise<boolean> {
 	});
 }
 
+function closeTab(tabId: number) {
+	chrome.tabs.remove(tabId);
+}
+
 async function setAlarms() {
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
@@ -57,7 +61,7 @@ clearAllAlarms();
 setAlarms();
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-	console.log(alarm.name);
+	closeTab(+alarm.name);
 });
 
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
