@@ -37,7 +37,10 @@
 			}
 
 			.options {
-				display: flex;
+				display: grid;
+				grid-gap: 5px;
+
+				grid-template-columns: 1fr 1fr 1fr 1fr;
 				justify-content: space-between;
 			}
 
@@ -76,6 +79,7 @@
 			<div class="option">30m</div>
 			<div class="option">1h</div>
 			<div class="option">2h</div>
+			<div class="option">off</div>
 		</div>
 
 		<script src="popup.js"></script>

@@ -52,15 +52,24 @@ function convertToMinutes(timer: string) {
 }
 
 async function setAlarms() {
+	const timer = (await getFromStorage('timer')) || '30m';
+	if (timer === 'off') {
+		chrome.browserAction.setBadgeText({ text: 'OFF' });
+		chrome.browserAction.setBadgeBackgroundColor({ color: '#53354a' });
+		return;
+	} else {
+		chrome.browserAction.setBadgeText({ text: 'ON' });
+		chrome.browserAction.setBadgeBackgroundColor({ color: '#53354a' });
+	}
+
+	const delayInMinutes = convertToMinutes(timer);
+
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
 
 	for (const a of alarms) {
 		setIds[a.name] = true;
 	}
-
-	const timer = (await getFromStorage('timer')) || '30m';
-	const delayInMinutes = convertToMinutes(timer);
 
 	const tabs = await getTabs();
 
@@ -90,6 +99,8 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
 });
 
 chrome.storage.onChanged.addListener(async (changes) => {
-	await clearAllAlarms();
-	await setAlarms();
+	if (changes.timer) {
+		await clearAllAlarms();
+		await setAlarms();
+	}
 });
