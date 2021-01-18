@@ -14,3 +14,17 @@ function createAlarm(tabId: string) {
 		delayInMinutes: 1,
 	});
 }
+
+async function setAlarms() {
+	const tabs = await getTabs();
+
+	for (const tab of tabs) {
+		createAlarm(tab.id + '');
+	}
+}
+
+setAlarms();
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+	console.log(alarm.name);
+});
