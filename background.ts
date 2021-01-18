@@ -52,7 +52,7 @@ function convertToMinutes(timer: string) {
 }
 
 async function setAlarms() {
-	const timer = (await getFromStorage('timer')) || '30m';
+	const timer = (await getFromStorage('timer')) || 'off';
 	if (timer === 'off') {
 		chrome.browserAction.setBadgeText({ text: 'OFF' });
 		chrome.browserAction.setBadgeBackgroundColor({ color: '#53354a' });

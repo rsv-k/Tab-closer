@@ -12,7 +12,7 @@ function setActiveClass(text: string) {
 }
 
 chrome.storage.local.get(['timer'], function (result) {
-	const timer: string = result.timer || '30m';
+	const timer: string = result.timer || 'off';
 	setActiveClass(timer);
 
 	for (let i = 0; i < options.length; i++) {
