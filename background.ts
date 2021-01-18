@@ -27,6 +27,12 @@ function clearAllAlarms() {
 	});
 }
 
+function clearAlarm(tabId: string): Promise<boolean> {
+	return new Promise((resolve) => {
+		chrome.alarms.clear(tabId, (wasCleared) => resolve(wasCleared));
+	});
+}
+
 async function setAlarms() {
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
@@ -37,12 +43,12 @@ async function setAlarms() {
 
 	const tabs = await getTabs();
 
-	console.log('Alarms: ', alarms);
-	console.log('Tabs ', tabs);
-
 	for (const tab of tabs) {
-		if (!tab.active && !setIds[tab.id + '']) {
-			createAlarm(tab.id + '');
+		const id = tab.id + '';
+		if (!tab.active && !setIds[id]) {
+			createAlarm(id);
+		} else if (tab.active && setIds[id]) {
+			await clearAlarm(id);
 		}
 	}
 }
@@ -54,6 +60,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 	console.log(alarm.name);
 });
 
-chrome.tabs.onActivated.addListener((activeInfo) => {
-	console.log(activeInfo);
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
+	await setAlarms();
 });
