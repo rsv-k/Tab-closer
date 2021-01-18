@@ -9,9 +9,9 @@ function getTabs(): Promise<chrome.tabs.Tab[]> {
 	});
 }
 
-function createAlarm(tabId: string) {
+function createAlarm(tabId: string, delayInMinutes: number) {
 	chrome.alarms.create(tabId, {
-		delayInMinutes: 1,
+		delayInMinutes,
 	});
 }
 
@@ -45,10 +45,10 @@ function getFromStorage(key: string): Promise<string | undefined> {
 	});
 }
 
-function covertToMinutes(timer: string) {
+function convertToMinutes(timer: string) {
 	const time = +timer.slice(0, -1);
 
-	return timer.slice(-1) === 'h' ? time * 60 : timer;
+	return timer.slice(-1) === 'h' ? time * 60 : time;
 }
 
 async function setAlarms() {
@@ -59,12 +59,15 @@ async function setAlarms() {
 		setIds[a.name] = true;
 	}
 
+	const timer = (await getFromStorage('timer')) || '30m';
+	const delayInMinutes = convertToMinutes(timer);
+
 	const tabs = await getTabs();
 
 	for (const tab of tabs) {
 		const id = tab.id + '';
 		if (!tab.active && !setIds[id]) {
-			createAlarm(id);
+			createAlarm(id, delayInMinutes);
 		} else if (tab.active && setIds[id]) {
 			await clearAlarm(id);
 		}
@@ -86,6 +89,7 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
 	await clearAlarm(tabId + '');
 });
 
-chrome.storage.onChanged.addListener((changes) => {
-	clearAllAlarms();
+chrome.storage.onChanged.addListener(async (changes) => {
+	await clearAllAlarms();
+	await setAlarms();
 });

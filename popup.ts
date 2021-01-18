@@ -12,9 +12,8 @@ function setActiveClass(text: string) {
 }
 
 chrome.storage.local.get(['timer'], function (result) {
-	if (result.timer) {
-		setActiveClass(result.timer);
-	}
+	const timer: string = result.timer || '30m';
+	setActiveClass(timer);
 
 	for (let i = 0; i < options.length; i++) {
 		const o = options[i] as HTMLElement;
