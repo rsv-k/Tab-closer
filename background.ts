@@ -45,6 +45,12 @@ function getFromStorage(key: string): Promise<string | undefined> {
 	});
 }
 
+function covertToMinutes(timer: string) {
+	const time = +timer.slice(0, -1);
+
+	return timer.slice(-1) === 'h' ? time * 60 : timer;
+}
+
 async function setAlarms() {
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
