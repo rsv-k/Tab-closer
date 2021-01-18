@@ -67,3 +67,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
 	await setAlarms();
 });
+
+chrome.tabs.onRemoved.addListener(async (tabId) => {
+	await clearAlarm(tabId + '');
+});
