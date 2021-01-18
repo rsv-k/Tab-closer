@@ -37,6 +37,14 @@ function closeTab(tabId: number) {
 	chrome.tabs.remove(tabId);
 }
 
+function getFromStorage(key: string): Promise<string | undefined> {
+	return new Promise((resolve) => {
+		chrome.storage.local.get([key], function (result) {
+			resolve(result[key]);
+		});
+	});
+}
+
 async function setAlarms() {
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
@@ -70,4 +78,8 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 
 chrome.tabs.onRemoved.addListener(async (tabId) => {
 	await clearAlarm(tabId + '');
+});
+
+chrome.storage.onChanged.addListener((changes) => {
+	clearAllAlarms();
 });
