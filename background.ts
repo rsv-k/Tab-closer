@@ -30,3 +30,7 @@ setAlarms();
 chrome.alarms.onAlarm.addListener((alarm) => {
 	console.log(alarm.name);
 });
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+	console.log(activeInfo);
+});
