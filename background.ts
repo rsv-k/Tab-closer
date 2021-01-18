@@ -19,7 +19,9 @@ async function setAlarms() {
 	const tabs = await getTabs();
 
 	for (const tab of tabs) {
-		createAlarm(tab.id + '');
+		if (!tab.active) {
+			createAlarm(tab.id + '');
+		}
 	}
 }
 
