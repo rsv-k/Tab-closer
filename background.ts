@@ -21,6 +21,12 @@ function getAlarms(): Promise<chrome.alarms.Alarm[]> {
 	});
 }
 
+function clearAllAlarms() {
+	return new Promise((resolve) => {
+		chrome.alarms.clearAll((wasCleared) => resolve(wasCleared));
+	});
+}
+
 async function setAlarms() {
 	const alarms = await getAlarms();
 	const setIds: { [key: string]: boolean } = {};
@@ -41,6 +47,7 @@ async function setAlarms() {
 	}
 }
 
+clearAllAlarms();
 setAlarms();
 
 chrome.alarms.onAlarm.addListener((alarm) => {
