@@ -8,3 +8,9 @@ function getTabs(): Promise<chrome.tabs.Tab[]> {
 		);
 	});
 }
+
+function createAlarm(tabId: string) {
+	chrome.alarms.create(tabId, {
+		delayInMinutes: 1,
+	});
+}
