@@ -51,15 +51,18 @@ function convertToMinutes(timer: string) {
 	return timer.slice(-1) === 'h' ? time * 60 : time;
 }
 
+function setBadges(text: string, color: string) {
+	chrome.browserAction.setBadgeText({ text });
+	chrome.browserAction.setBadgeBackgroundColor({ color });
+}
+
 async function setAlarms() {
 	const timer = (await getFromStorage('timer')) || 'off';
 	if (timer === 'off') {
-		chrome.browserAction.setBadgeText({ text: 'OFF' });
-		chrome.browserAction.setBadgeBackgroundColor({ color: '#53354a' });
+		setBadges('OFF', '#53354a');
 		return;
 	} else {
-		chrome.browserAction.setBadgeText({ text: 'ON' });
-		chrome.browserAction.setBadgeBackgroundColor({ color: '#53354a' });
+		setBadges('ON', '#53354a');
 	}
 
 	const delayInMinutes = convertToMinutes(timer);
