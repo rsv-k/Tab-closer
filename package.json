@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"clean": "rm -rf dist && cpy src/manifest.json dist && cpy src/images/* dist/images && cpy src/popup/popup.html dist",
-		"start": "npm run clean && webpack serve",
+		"start": "npm run clean && webpack --config webpack.config.js -w",
 		"build": "npm run clean && webpack --config webpack.config.prod.js"
 	},
 	"keywords": [],
