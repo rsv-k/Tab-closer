@@ -4,9 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"clean": "rm -rf dist && cpy manifest.json dist && cpy images/* dist/images",
-		"prebuild": "npm run clean",
-		"prewatch": "npm run clean"
+		"clean": "rm -rf dist && cpy src/manifest.json dist && cpy src/images/* dist/images && cpy src/popup/popup.html dist",
+		"build": "npm run clean && webpack"
 	},
 	"keywords": [],
 	"author": "",
