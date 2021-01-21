@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 	entry: {
 		background: './src/background/background.ts',
 		popup: './src/popup/popup.ts',
@@ -9,9 +9,7 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: 'dist',
 	},
-	// devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{
