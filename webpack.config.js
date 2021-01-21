@@ -1,5 +1,6 @@
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -25,6 +26,7 @@ module.exports = {
 		extensions: ['.ts', '.js'],
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new ChromeExtensionReloader(),
 		new CopyPlugin({
 			patterns: [
