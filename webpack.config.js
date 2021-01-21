@@ -3,7 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
+	mode: process.env.NODE_ENV,
 	entry: {
 		background: './src/background/background.ts',
 		popup: './src/popup/popup.ts',
@@ -11,9 +11,7 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: 'dist',
 	},
-	// devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{
