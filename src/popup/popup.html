@@ -31,55 +31,104 @@
 				box-sizing: border-box;
 			}
 
-			.title {
-				text-align: center;
-				font-weight: 400;
-			}
-
-			.options {
-				display: grid;
-				grid-gap: 5px;
-
-				grid-template-columns: 1fr 1fr 1fr 1fr;
-				justify-content: space-between;
-			}
-
-			.option {
-				width: 30px;
-				height: 30px;
-				padding: 5px;
+			.container {
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				flex-direction: column;
+				height: 100%;
+			}
+
+			.button {
+				text-transform: uppercase;
+				background: var(--option-bg);
 				cursor: pointer;
-				background-color: var(--option-bg);
+				padding: 10px 15px;
+				margin-top: 15px;
+				transition: transform 0.1s;
+				text-align: center;
+				width: 100%;
+				border-radius: 3px;
+			}
+
+			.button:hover {
+				transform: translateY(-0.5px);
+			}
+
+			.timer {
+				display: flex;
+				font-size: 40px;
+				user-select: none;
+			}
+
+			.linear {
 				position: relative;
-				font-weight: 300;
+				transition: 0.1s;
+				display: flex;
 			}
 
-			.option:hover {
-				background-color: var(--option-bg-hover);
-			}
-
-			.active::before {
-				content: '';
+			.btn {
 				position: absolute;
-				width: 10px;
-				height: 10px;
-				background-color: var(--option-active);
-				top: 0;
-				right: 0;
+				height: 5px;
+				width: 80%;
+				background-color: #fff;
+				left: 50%;
+				transform: translateX(-50%);
+				opacity: 0;
+				transition: opacity 0.3s;
+				cursor: pointer;
+			}
+
+			.linear:hover .btn {
+				opacity: 1;
+			}
+
+			.btn--top {
+				top: -5px;
+			}
+
+			.btn--bottom {
+				bottom: -5px;
+			}
+
+			.hours::before,
+			.minutes::before {
+				position: absolute;
+				bottom: -5px;
+				font-size: 10px;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.hours::before {
+				content: 'HOURS';
+			}
+
+			.minutes::before {
+				content: 'MINUTES';
+			}
+
+			.linear:hover::before {
+				opacity: 0;
 			}
 		</style>
 	</head>
 	<body>
-		<h1 class="title">Set timer to</h1>
-		<div class="options">
-			<div class="option">15m</div>
-			<div class="option">30m</div>
-			<div class="option">1h</div>
-			<div class="option">2h</div>
-			<div class="option">off</div>
+		<div class="container">
+			<div class="timer">
+				<div class="linear hours">
+					<span class="btn btn--top"></span>
+					<span class="text">00</span>
+					<span class="btn btn--bottom"></span>
+				</div>
+				<span class="divider">:</span>
+				<div class="linear minutes">
+					<span class="btn btn--top"></span>
+					<span class="text">00</span>
+					<span class="btn btn--bottom"></span>
+				</div>
+			</div>
+			<div class="button" id="button">set timer</div>
 		</div>
 
 		<script src="popup.js"></script>
