@@ -2,6 +2,11 @@ const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
+const plugins = [];
+
+if (process.env.NODE_ENV === 'development') {
+	plugins.push(new ChromeExtensionReloader());
+}
 
 module.exports = {
 	mode: process.env.NODE_ENV,
@@ -27,7 +32,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
-		new ChromeExtensionReloader(),
+		...plugins,
 		new CopyPlugin({
 			patterns: [
 				{ from: './src/images', to: 'images' },

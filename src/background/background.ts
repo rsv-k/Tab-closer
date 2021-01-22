@@ -10,7 +10,8 @@ import {
 
 async function setAlarms() {
 	try {
-		const timer = (await getFromStorage('timer')) || 'off';
+		const timer = (await getFromStorage('timer')) || '00:00';
+
 		if (timer === '00:00') {
 			setBadges('OFF', '#53354a');
 			return;

@@ -12,9 +12,9 @@ async function start() {
 	};
 
 	const result = await getFromStorage('timer');
-	const timer = (/\d\d\:\d\d/.test(result!.toString())
-		? result
-		: '00:00')!.split(':');
+	const timer = (/\d\d\:\d\d/.test(result + '') ? result : '00:00')!.split(
+		':'
+	);
 	initialTime = timer.join(':');
 	spanTexts[0].textContent = timer[0];
 	spanTexts[1].textContent = timer[1];
