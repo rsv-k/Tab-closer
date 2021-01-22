@@ -37,7 +37,7 @@ async function start() {
 	}
 }
 
-document.getElementById('button')!.addEventListener('click', () => {
+document.getElementById('button')!.addEventListener('click', async () => {
 	const time = [spanTexts[0].textContent!, spanTexts[1].textContent!].join(
 		':'
 	);
@@ -46,7 +46,10 @@ document.getElementById('button')!.addEventListener('click', () => {
 		return;
 	}
 
-	setToStorage('timer', time);
+	const result = await setToStorage('timer', time);
+	if (result) {
+		window.close();
+	}
 });
 
 start();
