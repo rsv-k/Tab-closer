@@ -1,4 +1,5 @@
 const options = document.getElementsByClassName('option');
+import { getFromStorage, setToStorage } from '../api/storage';
 
 function setActiveClass(text: string) {
 	for (let i = 0; i < options.length; i++) {
@@ -11,16 +12,18 @@ function setActiveClass(text: string) {
 	}
 }
 
-chrome.storage.local.get(['timer'], function (result) {
-	const timer: string = result.timer || 'off';
+async function start() {
+	const timer = (await getFromStorage('timer')) || 'off';
 	setActiveClass(timer);
 
 	for (let i = 0; i < options.length; i++) {
 		const o = options[i] as HTMLElement;
 
-		o.onclick = () =>
-			chrome.storage.local.set({ timer: o.textContent }, () => {
-				setActiveClass(o.textContent as string);
-			});
+		o.onclick = async () => {
+			await setToStorage('timer', o.textContent as string);
+			setActiveClass(o.textContent as string);
+		};
 	}
-});
+}
+
+start();
