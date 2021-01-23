@@ -1,0 +1,98 @@
+$bg-color: #2b2e4a;
+$primary-color: #e84545;
+
+*,
+*::after,
+*::before {
+	box-sizing: inherit;
+}
+
+body {
+	width: 150px;
+	height: 150px;
+	background-color: $bg-color;
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+}
+
+.button {
+	text-transform: uppercase;
+	background: $primary-color;
+	cursor: pointer;
+	padding: 10px 15px;
+	margin-top: 15px;
+	transition: transform 0.1s;
+	text-align: center;
+	width: 100%;
+	border-radius: 3px;
+}
+
+.button:hover {
+	transform: translateY(-0.5px);
+}
+
+.timer {
+	display: flex;
+	font-size: 40px;
+	user-select: none;
+}
+
+.linear {
+	position: relative;
+	transition: 0.1s;
+	display: flex;
+}
+
+.btn {
+	position: absolute;
+	height: 5px;
+	width: 80%;
+	background-color: #fff;
+	left: 50%;
+	transform: translateX(-50%);
+	opacity: 0;
+	transition: opacity 0.3s;
+	cursor: pointer;
+}
+
+.linear:hover .btn {
+	opacity: 1;
+}
+
+.btn--top {
+	top: -5px;
+}
+
+.btn--bottom {
+	bottom: -5px;
+}
+
+.hours::before,
+.minutes::before {
+	position: absolute;
+	bottom: -5px;
+	font-size: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.hours::before {
+	content: 'HOURS';
+}
+
+.minutes::before {
+	content: 'MINUTES';
+}
+
+.linear:hover::before {
+	opacity: 0;
+}

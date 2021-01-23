@@ -1,5 +1,6 @@
 import { addAdditionalZero } from '../api/common';
 import { getFromStorage, setToStorage } from '../api/storage';
+import './popup.scss';
 
 const buttons = document.querySelectorAll('span.btn');
 const spanTexts = document.querySelectorAll('span.text')!;
