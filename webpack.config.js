@@ -1,6 +1,8 @@
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const path = require('path');
 const plugins = [];
 
@@ -32,13 +34,17 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
-		...plugins,
+		new HtmlWebpackPlugin({
+			template: './src/popup/popup.html',
+			filename: 'popup.html',
+			inject: false,
+		}),
 		new CopyPlugin({
 			patterns: [
 				{ from: './src/images', to: 'images' },
 				{ from: './src/manifest.json', to: 'manifest.json' },
-				{ from: './src/popup/popup.html', to: 'popup.html' },
 			],
 		}),
+		...plugins,
 	],
 };
