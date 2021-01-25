@@ -1,4 +1,4 @@
-import { setBadges, convertToMinutes } from '../api/common';
+import { setBadges, convertToMinutes } from '../utils/common';
 import { browser } from 'webextension-polyfill-ts';
 
 async function setAlarms() {

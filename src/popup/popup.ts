@@ -1,4 +1,4 @@
-import { addAdditionalZero } from '../api/common';
+import { addAdditionalZero } from '../utils/common';
 import { browser } from 'webextension-polyfill-ts';
 import './popup.scss';
 
