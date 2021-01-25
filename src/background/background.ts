@@ -30,7 +30,6 @@ async function setAlarms() {
 	}
 }
 
-browser.alarms.clearAll();
 setAlarms();
 
 browser.alarms.onAlarm.addListener((alarm) => {
@@ -50,4 +49,8 @@ browser.storage.onChanged.addListener(async (changes) => {
 		await browser.alarms.clearAll();
 		await setAlarms();
 	}
+});
+
+browser.windows.onRemoved.addListener(() => {
+	browser.alarms.clearAll();
 });
