@@ -1,5 +1,5 @@
 import { addAdditionalZero } from '../api/common';
-import { getFromStorage, setToStorage } from '../api/storage';
+import { browser } from 'webextension-polyfill-ts';
 import './popup.scss';
 
 const buttons = document.querySelectorAll('span.btn');
@@ -12,11 +12,9 @@ async function start() {
 		'1': 59,
 	};
 
-	const result = await getFromStorage('timer');
-	const timer = (/\d\d\:\d\d/.test(result + '') ? result : '00:00')!.split(
-		':'
-	);
-	initialTime = timer.join(':');
+	const result = (await browser.storage.local.get('timer')).timer || '00:00';
+	initialTime = result;
+	const timer = result.split(':');
 	spanTexts[0].textContent = timer[0];
 	spanTexts[1].textContent = timer[1];
 
@@ -38,7 +36,7 @@ async function start() {
 	}
 }
 
-document.getElementById('button')!.addEventListener('click', async () => {
+document.getElementById('button')!.addEventListener('click', () => {
 	const time = [spanTexts[0].textContent!, spanTexts[1].textContent!].join(
 		':'
 	);
@@ -47,10 +45,10 @@ document.getElementById('button')!.addEventListener('click', async () => {
 		return;
 	}
 
-	const result = await setToStorage('timer', time);
-	if (result) {
-		window.close();
-	}
+	browser.storage.local.set({
+		timer: time,
+	});
+	window.close();
 });
 
 start();

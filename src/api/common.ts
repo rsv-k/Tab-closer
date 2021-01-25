@@ -1,3 +1,5 @@
+import { browser } from 'webextension-polyfill-ts';
+
 export function convertToMinutes(timer: string) {
 	const time = timer.split(':');
 	const minutes = +time[0] * 60 + +time[1];
@@ -6,8 +8,8 @@ export function convertToMinutes(timer: string) {
 }
 
 export function setBadges(text: string, color: string) {
-	chrome.browserAction.setBadgeText({ text });
-	chrome.browserAction.setBadgeBackgroundColor({ color });
+	browser.browserAction.setBadgeText({ text });
+	browser.browserAction.setBadgeBackgroundColor({ color });
 }
 
 export function addAdditionalZero(n: number) {
