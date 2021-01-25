@@ -33,20 +33,20 @@ async function setAlarms() {
 browser.alarms.clearAll();
 setAlarms();
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+browser.alarms.onAlarm.addListener((alarm) => {
 	browser.tabs.remove(+alarm.name);
 });
 
-chrome.tabs.onActivated.addListener(async (activeInfo) => {
+browser.tabs.onActivated.addListener(async (activeInfo) => {
 	await setAlarms();
 });
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+browser.tabs.onRemoved.addListener((tabId) => {
 	browser.alarms.clear(tabId + '');
 });
 
-chrome.storage.onChanged.addListener(async (changes) => {
-	if (changes.timer) {
+browser.storage.onChanged.addListener(async (changes) => {
+	if (changes.timer && changes.timer.newValue !== changes.timer.oldValue) {
 		await browser.alarms.clearAll();
 		await setAlarms();
 	}

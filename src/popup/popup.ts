@@ -2,9 +2,9 @@ import { addAdditionalZero } from '../utils/common';
 import { browser } from 'webextension-polyfill-ts';
 import './popup.scss';
 
-const buttons = document.querySelectorAll('span.btn');
-const spanTexts = document.querySelectorAll('span.text')!;
-let initialTime: string;
+const buttons = document.querySelectorAll('.btn');
+const spanTexts = document.querySelectorAll('.text');
+const button = document.getElementById('button')!;
 
 async function start() {
 	const maxAmount: { [key: string]: number } = {
@@ -13,10 +13,7 @@ async function start() {
 	};
 
 	const result = (await browser.storage.local.get('timer')).timer || '00:00';
-	initialTime = result;
-	const timer = result.split(':');
-	spanTexts[0].textContent = timer[0];
-	spanTexts[1].textContent = timer[1];
+	[spanTexts[0].textContent, spanTexts[1].textContent] = result.split(':');
 
 	for (let i = 0; i < buttons.length; i++) {
 		const btn = buttons[i] as HTMLSpanElement;
@@ -36,17 +33,11 @@ async function start() {
 	}
 }
 
-document.getElementById('button')!.addEventListener('click', () => {
-	const time = [spanTexts[0].textContent!, spanTexts[1].textContent!].join(
-		':'
-	);
-
-	if (time === initialTime) {
-		return;
-	}
+button.addEventListener('click', () => {
+	const timer = spanTexts[0].textContent! + ':' + spanTexts[1].textContent!;
 
 	browser.storage.local.set({
-		timer: time,
+		timer,
 	});
 	window.close();
 });
