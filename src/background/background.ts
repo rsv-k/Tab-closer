@@ -6,6 +6,9 @@ async function setAlarms() {
 		(await browser.storage.local.get('timer')).timer || '00:00';
 
 	setBadges(timer === '00:00' ? 'OFF' : 'ON', '#53354a');
+	if (timer === '00:00') {
+		return;
+	}
 
 	const delayInMinutes = convertToMinutes(timer);
 
