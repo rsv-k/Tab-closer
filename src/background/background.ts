@@ -41,6 +41,7 @@ async function setAlarms() {
 		const id = tab.id + '';
 
 		if (excludedIds[id]) {
+			browser.alarms.clear(id);
 			continue;
 		}
 
@@ -71,6 +72,12 @@ browser.storage.onChanged.addListener(async (changes) => {
 		await browser.alarms.clearAll();
 		await setAlarms();
 	}
+	// else if (
+	// 	changes.excludedUrls &&
+	// 	changes.excludedUrls.newValue !== changes.excludedUrls.oldValue
+	// ) {
+	// 	await setAlarms();
+	// }
 });
 
 browser.windows.onRemoved.addListener(() => {

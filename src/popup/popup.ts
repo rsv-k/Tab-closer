@@ -86,9 +86,10 @@ button.addEventListener('click', () => {
 });
 
 excludeButton.addEventListener('click', () => {
-	const urls = JSON.stringify(textarea.value.split(/\s+/));
+	const urls = JSON.stringify(textarea.value.trim().split(/\s+/));
 
 	browser.storage.local.set({ excludedUrls: urls });
+	window.close();
 });
 
 start();
