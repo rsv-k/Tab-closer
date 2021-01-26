@@ -23,8 +23,27 @@ async function setAlarms() {
 		windowId: browser.windows.WINDOW_ID_CURRENT,
 	});
 
+	const excludedUrls: string[] = JSON.parse(
+		(await browser.storage.local.get('excludedUrls')).excludedUrls || '[]'
+	);
+
+	const excludedIds: { [key: string]: boolean } = {};
 	for (const tab of tabs) {
+		for (const url of excludedUrls) {
+			if (tab.url!.indexOf(url) !== -1) {
+				excludedIds[tab.id!] = true;
+			}
+		}
+	}
+
+	for (let i = 0; i < tabs.length; i++) {
+		const tab = tabs[i];
 		const id = tab.id + '';
+
+		if (excludedIds[id]) {
+			continue;
+		}
+
 		if (!tab.active && !setIds[id]) {
 			browser.alarms.create(id, { delayInMinutes });
 		} else if (tab.active && setIds[id]) {

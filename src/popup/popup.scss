@@ -30,14 +30,9 @@ body {
 	cursor: pointer;
 	padding: 10px 15px;
 	margin-top: 15px;
-	transition: transform 0.1s;
 	text-align: center;
 	width: 100%;
 	border-radius: 3px;
-}
-
-.button:hover {
-	transform: translateY(-0.5px);
 }
 
 .timer {
@@ -48,7 +43,6 @@ body {
 
 .linear {
 	position: relative;
-	transition: 0.1s;
 	display: flex;
 }
 
@@ -95,4 +89,38 @@ body {
 
 .linear:hover::before {
 	opacity: 0;
+}
+
+.header {
+	margin-bottom: 5px;
+
+	&__nav {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	&__link {
+		color: #fff;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&--active {
+			border-bottom: 1px solid $primary-color;
+		}
+	}
+}
+
+.exclude {
+	height: 100%;
+
+	&__textarea {
+		width: 100%;
+		height: 60%;
+		background-color: transparent;
+		resize: none;
+	}
+}
+
+.invisible {
+	display: none;
 }

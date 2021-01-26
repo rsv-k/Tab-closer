@@ -11,6 +11,13 @@
 		<title>Tab-closer</title>
 	</head>
 	<body>
+		<header class="header">
+			<nav class="header__nav">
+				<a href="#" class="header__link header__link--active">Timer</a>
+				<a href="#" class="header__link">Exclude</a>
+			</nav>
+		</header>
+
 		<div class="container">
 			<div class="timer">
 				<div class="linear hours">
@@ -26,6 +33,11 @@
 				</div>
 			</div>
 			<div class="button" id="button">set timer</div>
+		</div>
+
+		<div class="exclude invisible">
+			<textarea class="exclude__textarea"></textarea>
+			<div class="button" id="exclude">save</div>
 		</div>
 
 		<script src="popup.js"></script>
