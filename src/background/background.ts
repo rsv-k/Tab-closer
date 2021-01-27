@@ -14,7 +14,6 @@ async function setAlarms() {
 
 	const alarms = await browser.alarms.getAll();
 	const setIds: { [key: string]: boolean } = {};
-
 	for (const a of alarms) {
 		setIds[a.name] = true;
 	}
@@ -59,8 +58,8 @@ browser.alarms.onAlarm.addListener((alarm) => {
 	browser.tabs.remove(+alarm.name);
 });
 
-browser.tabs.onActivated.addListener(async (activeInfo) => {
-	await setAlarms();
+browser.tabs.onActivated.addListener(() => {
+	setAlarms();
 });
 
 browser.tabs.onRemoved.addListener((tabId) => {
@@ -71,13 +70,12 @@ browser.storage.onChanged.addListener(async (changes) => {
 	if (changes.timer && changes.timer.newValue !== changes.timer.oldValue) {
 		await browser.alarms.clearAll();
 		await setAlarms();
+	} else if (
+		changes.excludedUrls &&
+		changes.excludedUrls.newValue !== changes.excludedUrls.oldValue
+	) {
+		await setAlarms();
 	}
-	// else if (
-	// 	changes.excludedUrls &&
-	// 	changes.excludedUrls.newValue !== changes.excludedUrls.oldValue
-	// ) {
-	// 	await setAlarms();
-	// }
 });
 
 browser.windows.onRemoved.addListener(() => {
